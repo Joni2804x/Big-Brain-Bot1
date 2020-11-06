@@ -39,7 +39,7 @@ public class Big_Brain_Bot {
 		
 		
 		DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
-		builder.setToken("NzUxMDM3MTI1MjkzNTA2NjIw.X1DP1A.zxCqKPRfSwTRKw8kvmZgv4KxXJc");
+		builder.setToken("The token is in the right place, yes");
 		
 		builder.setActivity(Activity.playing("mit sich selbst"));
 		builder.setStatus(OnlineStatus.ONLINE);
@@ -122,7 +122,7 @@ public class Big_Brain_Bot {
 		
 	}
 	
-	String[] status = new String[] {"mit sich selbst.","mit dem Stromkabel.", "mit kleinen Kindern.", "mit %members Discord Usern.", "benutze !bHilfe für meine Funktionen" }; // 
+	String[] status = new String[] {"mit sich selbst.","mit dem Stromkabel.", "mit kleinen Kindern.", "mit %members Discord Usern.", "benutze !bHilfe fÃ¼r meine Funktionen" }; // 
 	int next = 15;
 	
 	public void onSecond() {

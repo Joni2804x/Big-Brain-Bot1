@@ -13,13 +13,12 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class HelpCommand implements ServerCommand {
 
 	@Override
+	public void performCommand(TextChannel channel, Message message) {
 	
-	if(message.startsWith("Hilfe")) 
-	{
-		channel.sendMessage("-!bWitz --> Ich erzähle einen Witz\n" +
+		channel.sendMessage("-!bbWitz --> Ich erzähle einen Witz\n" +
 		"-Prost --> Ich wünsche dir Prost\n" +
 		"-Ich bin --> auf Sätze die mit |Ich bin| beginnen, antworte ich mit |Hallo + Nachricht + Ich bin Vater|\n" +
 		"-Gurke --> Ich sende eine Gurke\n" +
 		"-HANS! --> I get ze Flammenwerfer!\n").queue();
-	}
+	
   

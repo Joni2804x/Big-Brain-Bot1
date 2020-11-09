@@ -38,8 +38,7 @@ public class Big_Brain_Bot {
 		INSTANCE = this;
 		
 		
-		DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
-		builder.setToken("The token is in the right place, yes");
+		DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault("yes");
 		
 		builder.setActivity(Activity.playing("mit sich selbst"));
 		builder.setStatus(OnlineStatus.ONLINE);

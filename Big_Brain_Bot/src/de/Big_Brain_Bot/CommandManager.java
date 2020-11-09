@@ -17,6 +17,7 @@ public class CommandManager {
 	
 		this.commands.put("clear", new ClearCommand());
 		this.commands.put("Hilfe", new HelpCommand());
+		this.commands.put("Witz", new JokeCommand());
 	
 	}
 	

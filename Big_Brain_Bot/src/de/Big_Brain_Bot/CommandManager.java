@@ -16,6 +16,7 @@ public class CommandManager {
 		this.commands = new ConcurrentHashMap<>();
 	
 		this.commands.put("clear", new ClearCommand());
+		this.commands.put("Hilfe", new HelpCommand());
 	
 	}
 	
@@ -29,4 +30,6 @@ public class CommandManager {
 		
 		return false;
 	}
+	
+	
 }

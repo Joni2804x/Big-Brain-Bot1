@@ -1,9 +1,20 @@
 package Commands.types;
 
+import java.awt.Color;
+import java.security.Timestamp;
+import java.time.temporal.TemporalAccessor;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class GiveawayCommand implements ServerCommand {
 
@@ -11,22 +22,34 @@ public class GiveawayCommand implements ServerCommand {
 	public void performCommand(Member p, TextChannel channel, Message message) {
 		
 		String VerlosungsObjekt;
-		String VerlosungsDauer;
-		String VerlosungsRolle;
-		
-		String[] args = message.getContentDisplay().split(" ");
-		
+		User Autor = message.getAuthor();
+		String VerlosungsDauer;	
+	
 		
 		if(p.hasPermission(Permission.ADMINISTRATOR)) 
 		{
-			VerlosungsObjekt = args[0];
-			VerlosungsDauer = args[1];		
+	
+			channel.sendMessage("Was soll Verlost werden?").queue();	
+			if(message.getAuthor().isBot()) return;
+			VerlosungsObjekt = message.getContentRaw();
 			
-			channel.sendMessage("Welche Rolle soll teilnehmen?").queue();
+			channel.sendMessage("Wie lange soll die verlosung gehen?").queue();
+			if(message.getAuthor().isBot()) return;
+			VerlosungsDauer = message.getContentRaw();
 			
-			VerlosungsRolle = args[2];
 			
-			channel.sendMessage(VerlosungsObjekt + " " + VerlosungsDauer + " " + VerlosungsRolle).queue();
+			
+			
+			EmbedBuilder eb = new EmbedBuilder();
+			eb.setTitle("!Verlosung!");
+			eb.addField("Zu Verlosendes Objekt", VerlosungsObjekt, true);
+			//eb.setTimestamp(VerlosungsDauerint);
+			eb.setColor(Color.red);
+		
+			message.getChannel().sendMessage(eb.build()).queue();;
+			
+			
+		
 			
 			
 			
@@ -39,4 +62,11 @@ public class GiveawayCommand implements ServerCommand {
 		
 	}
 
+	private void VerlosungsObjekt(MessageReceivedEvent message) {
+		
+		
+	}
+	
 }
+
+

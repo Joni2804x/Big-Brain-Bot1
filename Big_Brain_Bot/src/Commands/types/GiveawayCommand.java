@@ -1,13 +1,13 @@
 package Commands.types;
 
 import java.awt.Color;
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.temporal.TemporalAccessor;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -34,8 +34,8 @@ public class GiveawayCommand implements ServerCommand{
 		long endTime;
 		
 		
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
-
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        
            
 		if(p.hasPermission(Permission.ADMINISTRATOR)) 
 		{
@@ -52,32 +52,34 @@ public class GiveawayCommand implements ServerCommand{
 				seconds = Integer.parseInt(args[1]);
 				minutes = Integer.parseInt(args[2]);
 				hours = Integer.parseInt(args[3]);
+				
 			}
 			catch(Exception ignored)
 			{
-				message.getChannel().sendMessage("Die angegebene Zeit muss eine zahl sein!");
+				message.getChannel().sendMessage("Die angegebene Zeit muss eine zahl sein!").queue();
 				return;
 			}
 			
 			VerlosungsObjekt = String.join(" ", Arrays.copyOfRange(args, 4, args.length - 0));
 			
 			endTime = System.currentTimeMillis() + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
-			Date date = new Date(endTime - System.currentTimeMillis());
+			Date date = new Date(endTime - System.currentTimeMillis() - 3600000);
 			
 			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("🎉" + "Verlosung" + "🎉");
 			eb.addField("Zu Verlosendes Objekt:", VerlosungsObjekt, true);
 			eb.addField("Übrige zeit: ", formatter.format(date), true);
 			eb.setColor(Color.red);
-		
+			
 			Message Rmessage = message.getChannel().sendMessage(eb.build()).complete();
+
 			
 			Rmessage.editMessage(eb.build()).complete();
 					
 			Rmessage.addReaction("🎉").queue();	  
 			
 			long c = endTime - System.currentTimeMillis() - 600000;
-			
+					
 			
 			while(c > 0)
 			{
@@ -117,7 +119,7 @@ public class GiveawayCommand implements ServerCommand{
 											}
 											while(Winner.isBot());
 											
-											channel.sendMessage("Gewonnen hat " + Winner + "🎉").queue(); 
+											channel.sendMessage("Gewonnen hat " + Winner.getAsMention() + "🎉").queue(); 
 										}
 							            
 							            break;
@@ -145,6 +147,3 @@ public class GiveawayCommand implements ServerCommand{
 		
 		
 	}
-
-
-	

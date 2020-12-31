@@ -78,7 +78,7 @@ public class GiveawayCommand implements ServerCommand{
 					
 			Rmessage.addReaction("🎉").queue();	  
 			
-			long c = endTime - System.currentTimeMillis() - 600000;
+			long c = endTime - System.currentTimeMillis() - 60000;
 					
 			
 			while(c > 0)
@@ -92,8 +92,9 @@ public class GiveawayCommand implements ServerCommand{
 								Rmessage.editMessage(eb.build()).queue();
 							}
 						},
-						c = c - 600000
+						c
 						);
+						c = c - 60000;
 			}
 			
 			new java.util.Timer().schedule(
@@ -116,6 +117,7 @@ public class GiveawayCommand implements ServerCommand{
 											do
 											{
 												Winner = Users.get(rand.nextInt(Users.size()));
+												System.out.println(Winner);
 											}
 											while(Winner.isBot());
 											

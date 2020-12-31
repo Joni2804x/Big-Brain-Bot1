@@ -31,14 +31,12 @@ public class GiveawayCommand implements ServerCommand{
 		int seconds;
 		int minutes;
 		int hours;
-		long EndTime;
-		 
-        SimpleDateFormat StartTime = new SimpleDateFormat("hh:mm:ss");
-        
-        Date date = new Date();
-        String result = StartTime.format(date);
+		long endTime;
+		
+		
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
 
-        
+           
 		if(p.hasPermission(Permission.ADMINISTRATOR)) 
 		{
 	
@@ -50,62 +48,103 @@ public class GiveawayCommand implements ServerCommand{
 			else
 			{
 
-			seconds = Integer.parseInt(args[1]);
-			minutes = Integer.parseInt(args[2]);
-			hours = Integer.parseInt(args[3]);
+			try{
+				seconds = Integer.parseInt(args[1]);
+				minutes = Integer.parseInt(args[2]);
+				hours = Integer.parseInt(args[3]);
+			}
+			catch(Exception ignored)
+			{
+				message.getChannel().sendMessage("Die angegebene Zeit muss eine zahl sein!");
+				return;
+			}
+			
 			VerlosungsObjekt = String.join(" ", Arrays.copyOfRange(args, 4, args.length - 0));
 			
-			EndTime = System.currentTimeMillis() + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
-			
+			endTime = System.currentTimeMillis() + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
+			Date date = new Date(endTime - System.currentTimeMillis());
 			
 			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("🎉" + "Verlosung" + "🎉");
 			eb.addField("Zu Verlosendes Objekt:", VerlosungsObjekt, true);
-			eb.addField("Bis ", args[1], true);
+			eb.addField("Übrige zeit: ", formatter.format(date), true);
 			eb.setColor(Color.red);
 		
 			Message Rmessage = message.getChannel().sendMessage(eb.build()).complete();
 			
-			Rmessage.addReaction("🎉").queue();	       
+			Rmessage.editMessage(eb.build()).complete();
+					
+			Rmessage.addReaction("🎉").queue();	  
 			
-			for (MessageReaction i : Rmessage.getReactions()) {
-			    if (i.getReactionEmote().isEmoji()) {
-			        if (i.getReactionEmote().getEmoji().equals("🎉")) {
-			            User Users = i.retrieveUsers().complete();
-			            
-			            if(Users)
-						{
-							Random rand = new Random();
-							do
-							{
-								User Winner = Users.get(rand.nextInt(0, Users.size()));
-							}
-							while(!Winner.isBot());
+			long c = endTime - System.currentTimeMillis() - 600000;
+			
+			
+			while(c > 0)
+			{
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
 							
-							channel.sendMessage("Gewonnen hat " + Winner + "🎉").queue(); 
-						}
-			            
-			            break;
-			        }
-			    }
+							@Override
+							public void run()
+							{
+								Rmessage.editMessage(eb.build()).queue();
+							}
+						},
+						c = c - 600000
+						);
 			}
+			
+			new java.util.Timer().schedule(
+					new java.util.TimerTask() {
+						
 
+						@Override
+						public void run() 
+						{
+							User Winner;
+							
+							for (MessageReaction i : Rmessage.getReactions()) {
+							    if (i.getReactionEmote().isEmoji()) {
+							        if (i.getReactionEmote().getEmoji().equals("🎉")) {
+							            List<User> Users = i.retrieveUsers().complete();
+							            
+							            if(Users.size() > 1)
+										{
+											Random rand = new Random();
+											do
+											{
+												Winner = Users.get(rand.nextInt(Users.size()));
+											}
+											while(Winner.isBot());
+											
+											channel.sendMessage("Gewonnen hat " + Winner + "🎉").queue(); 
+										}
+							            
+							            break;
+							        }
+							    }
+							}	
+							
+						}
+						
+						
+					},
+					endTime - System.currentTimeMillis()
+					);
+			
+			}
 			
 			
 				
-				
-		}
-			
-			
-			
 		}
 		else
 		{
 			channel.sendMessage("Unzureichende Berechtigungen!").queue();
 		}
+		}
+		
 		
 	}
 
+
 	
-	
-}

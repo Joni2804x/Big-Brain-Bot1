@@ -66,10 +66,7 @@ public class Command_listener extends ListenerAdapter {
 			 "-Gurke --> Ich sende eine Gurke\n" +
 			 "-HANS! --> I get ze Flammenwerfer!\n").queue();
 			}
-			else if(message.startsWith("!bKarma" )) {
-				
-				
-			}
+			
 			
 			    
 						

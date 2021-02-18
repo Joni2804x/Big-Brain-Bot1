@@ -13,7 +13,8 @@ public class MiesmuschelCommand implements ServerCommand {
 	@Override
 	public void performCommand(Member p, TextChannel channel, Message message) {
 		
-		List<String> givenList = Arrays.asList("Ja"
+		List<String> givenList = Arrays.asList(
+				  "Ja"
 				, "Nein"
 				, "Vielleicht"
 				, "Ganz bestimmt"
@@ -21,7 +22,8 @@ public class MiesmuschelCommand implements ServerCommand {
 				, "Auf jeden fall"
 				, "Auf garkeinen Fall"
 				, "Ich fühl mich grad nicht so danach diese Frage zu beantworten"
-				, "Frag doch einfach nochmal"); 																		
+				, "Frag doch einfach nochmal"); 				
+		
 	    Random rand = new Random();
 	    String randomElement = givenList.get(rand.nextInt(givenList.size()));
 	  	channel.sendMessage(randomElement).queue();	

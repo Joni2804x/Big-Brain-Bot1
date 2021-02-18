@@ -16,10 +16,11 @@ public class HelpCommand implements ServerCommand {
 	public void performCommand(Member p, TextChannel channel, Message message)
 	{
 		channel.sendMessage("-!bbWitz --> Ich erzÃ¤hle einen Witz\n" +
-				"-Prost --> Ich wÃ¼nsche dir Prost\n" +
-				"-Ich bin --> auf SÃ¤tze die mit |Ich bin| beginnen, antworte ich mit |Hallo + Nachricht + Ich bin Vater|\n" +
+				"-Prost --> Ich wünsche dir Prost\n" +
+				"-Ich bin --> auf Sätze die mit |Ich bin| beginnen, antworte ich mit |Hallo + Nachricht + Ich bin Vater|\n" +
 				"-Gurke --> Ich sende eine Gurke\n" +
-				"-HANS! --> I get ze Flammenwerfer!\n").queue();
+				"-HANS! --> I get ze Flammenwerfer!\n" +
+				"!bbMiesmuschel --> Ich antworte auf deine Frage\n").queue();
 	}
 }
 	

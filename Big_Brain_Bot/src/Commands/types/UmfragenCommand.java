@@ -27,17 +27,19 @@ public class UmfragenCommand implements ServerCommand {
 		if(p.hasPermission(Permission.KICK_MEMBERS))
 		{
 			Timer timer = new Timer();
-			Emote one = message.getGuild().getEmoteById("796585138846564382");
-			Emote two = message.getGuild().getEmoteById("796585156751917076");
-			Emote three = message.getGuild().getEmoteById("796585404958375946");
+			Emote one = message.getGuild().getEmoteById("809091148189532202");
+			Emote two = message.getGuild().getEmoteById("809091174726893688");
+			Emote three = message.getGuild().getEmoteById("809091205325127750");
+			
+			String Sone = "809091148189532202";
+			String Stwo = "809091174726893688";
+			String Sthree = "809091205325127750";
+			
 			User author = p.getUser();
 			
 			int seconds;
 			int minutes = 0; 
 			int hours = 0;
-			int result1 = 1;
-			int result2 = 1;
-			int result3 = 1;
 			long endTime;
 			String[] args = message.getContentRaw().split(" ");
 			String frage = String.join(" ", Arrays.copyOfRange(args, 5, args.length - 0));
@@ -59,14 +61,14 @@ public class UmfragenCommand implements ServerCommand {
 			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("!Umfrage!");
 			eb.addField("Frage: ", frage, true);
-			eb.addField("Ãœbrige Zeit: ", formatter.format(date) , true);
+			eb.addField("Angegebene Zeit: ", formatter.format(date) , false);
 			eb.addField("Option 1: ", args[2], true);
 			eb.addField("Option 2: ", args[3], true);
 			eb.addField("Option 3:", args[4], true);
 			
 			if(args.length < 4)
 			{
-				message.getChannel().sendMessage("Es mÃ¼ssen mindestens 2 Optionen zur Auswahl stehen!").complete().delete().queueAfter(3, TimeUnit.SECONDS);
+				message.getChannel().sendMessage("Es müssen mindestens 2 Optionen zur Auswahl stehen!").complete().delete().queueAfter(3, TimeUnit.SECONDS);
 				return;
 			}		
 			
@@ -79,28 +81,12 @@ public class UmfragenCommand implements ServerCommand {
 			Rmessage.addReaction(three).queue();
 			
 			String ID = Rmessage.getId();
+			
+			Long Lone = Long.parseLong(Sone);
+			Long Ltwo = Long.parseLong(Stwo);
+			Long Lthree = Long.parseLong(Sthree);
 				
 			
-			
-			
-			
-			long c = endTime - System.currentTimeMillis() - 600000;
-			
-			while(c > 0)
-			{
-				timer.schedule(
-						new java.util.TimerTask() {
-							
-							@Override
-							public void run()
-							{
-								Rmessage.editMessage(eb.build()).queue();
-							}
-						},
-						c
-						);
-						c = c - 600000;
-			}
 			
 			timer.schedule(
 					new java.util.TimerTask() 
@@ -110,50 +96,75 @@ public class UmfragenCommand implements ServerCommand {
 						{
 							System.out.println("Debug");
 							
-							for (MessageReaction i : message.getChannel().getHistory().getMessageById(ID).getReactions()) 
-                            {
-                                if(i.getReactionEmote().getEmote().equals(one))
-                                {
+							EmbedBuilder peb = new EmbedBuilder();
+							
                                 	RestAction<Message> messages = channel.retrieveMessageById(ID);
         							Message msg = messages.complete();
-        							List<User> membs = new ArrayList<>();
+        							List<User> res1 = new ArrayList<>();
         							for (MessageReaction reaction : msg.getReactions()){
-        								if (reaction.getReactionEmote().getIdLong() == GiveawayEmote) {
-        								      membs.addAll(reaction.retrieveUsers().complete());
+        								if (reaction.getReactionEmote().getIdLong() == Lone) {
+        								      res1.addAll(reaction.retrieveUsers().complete());
+        								      res1.remove(msg.getJDA().getSelfUser());
         								      
+        								      
+        								    		  peb.setTitle("Die Umfrage wurde beendet!");
+          								    		  peb.addField("Die Frage Lautete: ", frage, true);
+        								    		  peb.addField("Die Ergebnisse lauten: ", res1.size() + " Stimmen für " + args[2], false);
+        								    		   
+        								    		    
         								      
         								}
         							}
-                                }
+                                
 
-                                if(i.getReactionEmote().getEmote().equals(two))
-                                {
-                                    //result2 = "number of people that reacted with this emote" - 1;
-                                }
+                                
+                                	RestAction<Message> messages2 = channel.retrieveMessageById(ID);
+        							Message msg2 = messages2.complete();
+        							List<User> res2 = new ArrayList<>();
+        							for (MessageReaction reaction : msg2.getReactions()){
+        								if (reaction.getReactionEmote().getIdLong() == Ltwo) {
+        								      res2.addAll(reaction.retrieveUsers().complete());
+        								      res2.remove(msg2.getJDA().getSelfUser());
+        								      
+        								      
+        								    		  peb.addField(" ", res2.size()  + " Stimmen für " + args[3], false);
+        								     
+        								      
+        								}
+        							}
+        							
+                                
+                                
 
-                                if(i.getReactionEmote().getEmote().equals(three))
-                                {
-                                    //result3 = "number of people that reacted with this emote" - 1;
-                                }
-                                break;
+                                
+                                	RestAction<Message> messages3 = channel.retrieveMessageById(ID);
+        							Message msg3 = messages3.complete();
+        							List<User> res3 = new ArrayList<>();
+        							for (MessageReaction reaction : msg3.getReactions()){
+        								if (reaction.getReactionEmote().getIdLong() == Lthree) {
+        								      res3.addAll(reaction.retrieveUsers().complete());
+        								      res3.remove(msg3.getJDA().getSelfUser());
+        								      
+        								     
+        								    		  peb.addField(" ", res3.size()  + " Stimmen für " + args[4], false);
+        								    		  author.openPrivateChannel().complete().sendMessage(peb.build()).complete();
+        								     
+        								      
+        								}
+        							}
+                                	
+                            Rmessage.getChannel().sendMessage("Die Umfrage wurde beendet!").queue();
+                                
                             }
 							
-							author.openPrivateChannel().complete().sendMessage(
-							"Die Umfrage wurde beendet!" + "\nDie Frage lautete: " + frage
-							+ "\nDie verfÃ¼gbaren Optionen waren: " + "\n1." + args[2] 
-							+ "\n2." + args[3]
-							+ "\n3." + args[4]
-							+ "\nDie Ergebnisse lauten: "	
-							+ result1 + " Stimme/n fÃ¼r " + args[2]
-							+ result2 + " Stimme/n fÃ¼r " + args[3]
-							+ result3 + " Stimme/n fÃ¼r " + args[4]).complete();
 							
-						}
+						
 						
 						
 					},
 					endTime - System.currentTimeMillis()
 					);
+				
 			
 			
 			//message.getChannel().sendMessage("âœ…").complete().delete().queueAfter(3, TimeUnit.SECONDS);

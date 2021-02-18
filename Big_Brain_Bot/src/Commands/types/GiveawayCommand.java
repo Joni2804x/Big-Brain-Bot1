@@ -107,24 +107,24 @@ public class GiveawayCommand implements ServerCommand{
 					
 			
 			
-			long c = endTime - System.currentTimeMillis() - 600000;
+			//long c = endTime - System.currentTimeMillis() - 600000;
 			
-			while(c > 0)
-			{
-				timer.schedule(
-						new java.util.TimerTask() {
+			//while(c > 0)
+			//{
+			//	timer.schedule(
+			//			new java.util.TimerTask() {
 							
-							@Override
-							public void run()
-							{
-								Rmessage.editMessage(eb.build()).queue();
+				//			@Override
+					//		public void run()
+						//	{
+							//	Rmessage.editMessage(eb.build()).queue();
 								//System.out.println(Rmessage.getReactions().size());
-							}
-						},
-						c
-						);
-						c = c - 600000;
-			}
+						//	}
+						//},
+						//c
+						//);
+						//c = c - 600000;
+		//	}
 			
 				
 				

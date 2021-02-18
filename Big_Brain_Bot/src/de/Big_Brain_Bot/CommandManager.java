@@ -9,7 +9,9 @@ import Commands.types.HelpCommand;
 import Commands.types.JokeCommand;
 import Commands.types.KarmaCommand;
 import Commands.types.KickCommand;
+import Commands.types.MiesmuschelCommand;
 import Commands.types.MuteCommand;
+import Commands.types.RollenCommand;
 import Commands.types.ServerCommand;
 import Commands.types.UmfragenCommand;
 import net.dv8tion.jda.api.entities.Member;
@@ -32,6 +34,8 @@ public class CommandManager {
 		this.commands.put("ban", new BanCommand());
 		this.commands.put("mute", new MuteCommand());
 		this.commands.put("umfrage", new UmfragenCommand());
+		this.commands.put("rollen", new RollenCommand());
+		this.commands.put("miesmuschel", new MiesmuschelCommand());
 	
 	}
 	
